@@ -1,3 +1,7 @@
 .attachment {
   margin-bottom: govuk-spacing(6);
 }
+
+.accessible-format-link {
+  @include govuk-font(19);
+}
