@@ -1,21 +1,11 @@
 class ContactPresenter < ContentItemPresenter
   include ContentItem::TitleAndContext
+  include ContentItem::ContactDetails
 
   def title_and_context
     super.tap do |t|
       t.delete(:average_title_length)
       t.delete(:context)
-    end
-  end
-
-  def online_form_links
-    contact_form_links = content_item["details"]["contact_form_links"] || []
-    contact_form_links.map do |link|
-      {
-        url: link["link"],
-        title: link["title"],
-        description: link["description"].try(:html_safe),
-      }
     end
   end
 
@@ -41,20 +31,10 @@ class ContactPresenter < ContentItemPresenter
 
   def post
     post_address_groups.map do |group|
-      details = {
+      {
         description: group["description"].try(:strip).try(:html_safe),
-        v_card: [
-          v_card_part("fn", group["title"]),
-          v_card_part("street-address", group["street_address"]),
-          v_card_part("locality", group["locality"]),
-          v_card_part("region", group["region"]),
-          v_card_part("postal-code", group["postal_code"]),
-          v_card_part("country-name", group["world_location"]),
-        ],
+        v_card: address_hash(group).map { |key, value| v_card_part(key, value) },
       }
-
-      details[:v_card].select! { |v| v[:value].present? }
-      details
     end
   end
 
@@ -125,18 +105,6 @@ private
       v_card_class:,
       value: value.try(:strip).try(:html_safe),
     }
-  end
-
-  def email_address_groups
-    content_item["details"]["email_addresses"] || []
-  end
-
-  def post_address_groups
-    content_item["details"]["post_addresses"] || []
-  end
-
-  def phone_number_groups
-    content_item["details"]["phone_numbers"] || []
   end
 
   def related_contacts_links
