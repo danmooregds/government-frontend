@@ -27,7 +27,7 @@ class DevelopmentController < ApplicationController
                        travel_advice
                        working_group]
 
-    @paths = YAML.load_file(Rails.root.join("config/govuk_examples.yml"))
+    @paths = YAML.load_file(Rails.root.join("config/test_govuk_examples.yml"))
   end
 
 private

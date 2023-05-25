@@ -1,0 +1,7 @@
+<% content_for :header do %>
+  <%= render "content_items/multi-part/header", {
+    content_item: @content_item, heading_level: 2, margin_bottom: 6,
+  } %>
+<% end %>
+
+<%= render "content_items/multi-part/change_notes" %>
