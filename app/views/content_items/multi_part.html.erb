@@ -1,12 +1,12 @@
 <% content_for :header do %>
-  <%= render "content_items/multi-part/header", {
+  <%= render "content_items/multi_part/header", {
     content_item: @content_item,
     heading_level: 1,
     margin_bottom: 3
   } %>
 <% end %>
 
-<%= render "content_items/multi-part/multi_part_layout" do %>
+<%= render "content_items/multi_part/multi_part_layout" do %>
   <% @content_item.section_groups.each do |group| %>
     <%= render "govuk_publishing_components/components/document_list", {
         items: group["child_sections"].map do |section|

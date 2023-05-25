@@ -2,11 +2,11 @@
   green_background ||= false
   type ||= nil
 
-  classes = %w[govuk-grid-row multi-part-header]
+  classes = %w[govuk-grid-row multi_part-header]
   classes << "hmrc" if green_background
 %>
 
-<%= content_tag(:header, aria: { "labelledby": "multi-part-title" }, class: classes) do %>
+<%= content_tag(:header, aria: { "labelledby": "multi_part-title" }, class: classes) do %>
   <div class='govuk-grid-column-two-thirds'>
 
     <% if type %>
@@ -17,7 +17,7 @@
       text: content_item.title,
       font_size: "l",
       inverse: true,
-      id: "multi-part-title",
+      id: "multi_part-title",
       heading_level: heading_level,
       margin_bottom: margin_bottom,
     } %>
@@ -27,7 +27,7 @@
     <div class="in-multi-part-search">
       <form action="/search/all" >
 
-        <input type='hidden' name="multi-part[]" value="<%= content_item.base_path %>">
+        <input type='hidden' name="multi_part[]" value="<%= content_item.base_path %>">
 
         <%= render "govuk_publishing_components/components/search", {
           on_govuk_blue: true,
