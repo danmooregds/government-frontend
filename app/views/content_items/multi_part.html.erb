@@ -1,24 +1,38 @@
-<% content_for :header do %>
-  <%= render "content_items/multi_part/header", {
-    content_item: @content_item,
-    heading_level: 1,
-    margin_bottom: 3
-  } %>
-<% end %>
+<div id="multi-part-frontend" class="multi-parts-frontend-body">
 
-<%= render "content_items/multi_part/multi_part_layout" do %>
-  <% @content_item.section_groups.each do |group| %>
-    <%= render "govuk_publishing_components/components/document_list", {
-        items: group["child_sections"].map do |section|
-          {
-            link: {
-              text: section["title"],
-              path: section["base_path"],
-              description: section["description"],
-              full_size_description: true,
-            }
-          }
-        end
+<%= machine_readable_metadata(schema: :article) %>
+
+<%= render "content_items/multi_part/header", {
+    content_item: @content_item, heading_level: 1, margin_bottom: 3
+} %>
+
+  <div class="multi-part-body">
+    <% if @content_item.description.present? %>
+      <%= render "govuk_publishing_components/components/lead_paragraph", {
+        text: @content_item.description
+      } %>
+    <% end %>
+    <% if @content_item.body.present? %>
+      <%= render "govuk_publishing_components/components/govspeak", {} do %>
+        <%= raw(@content_item.body) %>
+      <% end %>
+    <% end %>
+
+
+
+    <%= render 'govuk_publishing_components/components/print_link', {
+      data_attributes: {
+        module: "ga4-event-tracker",
+        ga4_event: {
+          event_name: 'print_page',
+          type: 'print page',
+          index: {
+            index_link: 1,
+          },
+          index_total: 1,
+          section: 'Footer',
+        },
+      },
     } %>
-  <% end %>
-<% end %>
+  </div>
+</div>
