@@ -22,6 +22,17 @@ module ContentItem
       parts.any? && requested_path && requested_path != base_path
     end
 
+    def has_valid_part?
+      current_part && current_part != parts.first
+    end
+
+    def current_part
+      if part_slug
+        parts.find { |part| part["slug"] == part_slug }
+      else
+        parts.first
+      end
+    end
     def body
       details["body"]
     end
