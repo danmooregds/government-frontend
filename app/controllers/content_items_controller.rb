@@ -193,6 +193,9 @@ private
       Rails.logger.warn('after a part but no valid part')
       redirect_to @content_item.base_path
       return
+    else
+      render "part"
+      return
     end
 
     if @content_item.requesting_a_service_sign_in_page? && !@content_item.has_valid_path?

@@ -27,6 +27,8 @@ Rails.application.routes.draw do
         variant: /print/,
       }
 
+  get '*path/part', to: 'content_items#show'
+
   get "*path(.:locale)(.:format)" => "content_items#show",
       constraints: {
         format: /atom/,
