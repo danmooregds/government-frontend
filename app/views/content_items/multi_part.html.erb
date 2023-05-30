@@ -18,7 +18,34 @@
       <% end %>
     <% end %>
 
+      <%= render "govuk_publishing_components/components/document_list", {
+        items: @content_item.parts.each.map do |part|
+          {
+            link: {
+              text: part["title"],
+              path: part["base_path"],
+              description: part["description"],
+              full_size_description: true,
+            }
+          }
+        end
+      } %>
 
+    <%= render "govuk_publishing_components/components/table", {
+      rows: @content_item.parts.each.map do |part|
+          [
+            {
+              text:part["title"]
+            },
+            {
+              text:part["description"]
+            },
+            {
+              text: link_to("View" , @content_item.base_path + "/#{part["slug"]}", class: "govuk-link")
+            }
+          ]
+      end
+    } %>
 
     <%= render 'govuk_publishing_components/components/print_link', {
       data_attributes: {

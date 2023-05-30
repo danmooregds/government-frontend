@@ -3,19 +3,12 @@ module ContentItem
     include Linkable
     include Updatable
 
-    def multi_part_metadata
-      {
-        from:,
-        first_published: published,
-        other: other_metadata,
-        inverse: true,
-      }
-    end
     def page_title
       title = content_item["title"] || ""
       title += " - " if title.present?
+      I18n.t("multi_part.title", title:)
     end
-    alias_method :manual_page_title, :page_title
+    alias_method :multi_part_title, :page_title
 
     def breadcrumbs
       [{ title: I18n.t("manuals.breadcrumb_contents") }]
@@ -25,10 +18,13 @@ module ContentItem
       content_item.dig("details", "parts") || []
     end
 
+    def requesting_a_part?
+      parts.any? && requested_path && requested_path != base_path
+    end
+
     def body
       details["body"]
     end
-
 
   private
 
@@ -43,6 +39,14 @@ module ContentItem
 
     def details
       content_item["details"]
+    end
+    def multi_part_metadata
+      {
+        from:,
+        first_published: published,
+        other: other_metadata,
+        inverse: true,
+      }
     end
   end
 end
