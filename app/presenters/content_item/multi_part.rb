@@ -23,16 +23,19 @@ module ContentItem
     end
 
     def has_valid_part?
-      current_part && current_part != parts.first
+      Rails.logger.warn('MultiPart has valid part?')
+      Rails.logger.warn('parts: ' + parts.inspect)
+      Rails.logger.warn('parts.first: ' + parts.first.inspect)
+      Rails.logger.warn('current_part: ' + current_part.inspect)
+      parts.any?
     end
 
     def current_part
       if part_slug
         parts.find { |part| part["slug"] == part_slug }
-      else
-        parts.first
       end
     end
+
     def body
       details["body"]
     end

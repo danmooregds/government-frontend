@@ -190,6 +190,7 @@ private
 
   def render_template
     if @content_item.requesting_a_part? && !@content_item.has_valid_part?
+      Rails.logger.warn('after a part but no valid part')
       redirect_to @content_item.base_path
       return
     end
