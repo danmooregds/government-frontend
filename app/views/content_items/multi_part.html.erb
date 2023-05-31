@@ -1,12 +1,13 @@
-<div id="multi-part-frontend" class="multi-parts-frontend-body">
-
+<div id="manuals-frontend" class="manuals-frontend-body">
+<!-- Div's added for classes for CSS instead of duping class -->
 <%= machine_readable_metadata(schema: :article) %>
 
 <%= render "content_items/multi_part/header", {
     content_item: @content_item, heading_level: 1, margin_bottom: 3
 } %>
 
-  <div class="multi-part-body">
+  <!-- Div's added for classes for CSS instead of duping class -->
+<div class="manual-body">
     <% if @content_item.description.present? %>
       <%= render "govuk_publishing_components/components/lead_paragraph", {
         text: @content_item.description
