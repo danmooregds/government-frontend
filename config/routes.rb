@@ -12,22 +12,20 @@ Rails.application.routes.draw do
   get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
   get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
     GovukHealthcheck::RailsCache,
-  )
+    )
 
   get "/government/uploads/*path" => "asset_manager_redirect#show", format: false
 
   get "/service-manual/search",
       to: redirect { |_, request|
-            query = request.query_parameters.merge(filter_manual: "/service-manual").to_query
-            "/search?#{query}"
-          }
+        query = request.query_parameters.merge(filter_manual: "/service-manual").to_query
+        "/search?#{query}"
+      }
 
   get "*path/:variant" => "content_items#show",
       constraints: {
         variant: /print/,
       }
-
-  get '*path/part', to: 'content_items#show'
 
   get "*path(.:locale)(.:format)" => "content_items#show",
       constraints: {
