@@ -1,1 +1,50 @@
-This is a part for now ;)
+<% part = @content_item.parts.select { |part| part["slug"] == params[:path].split('/').last } %>
+
+<div id="manuals-frontend" class="manuals-frontend-body">
+  <%= render "content_items/multi_part/header", {
+    content_item: @content_item, heading_level: 1, margin_bottom: 6,
+  } %>
+
+  <div class="govuk-grid-row">
+    <div class="manual-body" id="content">
+      <article aria-labelledby="section-title">
+        <div class="govuk-grid-column-full">
+
+          <%= render "govuk_publishing_components/components/heading", {
+            text: part[0]["title"],
+            font_size: "m",
+            id: "section-title",
+            heading_level: 1,
+            margin_bottom: 4,
+          } %>
+        </div>
+
+        <% if part[0]["description"].present? %>
+          <div class="govuk-grid-column-two-thirds">
+            <%= render "govuk_publishing_components/components/lead_paragraph", {
+              text: part[0]["description"]
+            } %>
+          </div>
+        <% end %>
+
+        <div class="govuk-grid-column-two-thirds">
+          <% if part[0]["body"].present? %>
+            <div class="govuk-!-margin-bottom-3">
+              <%= render "govuk_publishing_components/components/heading", {
+                text: part[0]["title"],
+                font_size: "m",
+                margin_bottom: 1,
+                id: part[0]["title"],
+              } %>
+            </div>
+            <div class="govuk-body govuk-!-margin-bottom-1">
+              <%= render "govuk_publishing_components/components/govspeak", {} do
+                raw(part[0]["body"])
+              end %>
+            </div>
+          <% end %>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

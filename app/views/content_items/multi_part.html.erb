@@ -1,12 +1,16 @@
+<%= machine_readable_metadata(
+      schema: :article,
+      canonical_url: @content_item.canonical_url,
+      title: @content_item.page_title,
+      body: @content_item.current_part_body
+    ) %>
 <div id="manuals-frontend" class="manuals-frontend-body">
 <!-- Div's added for classes for CSS instead of duping class -->
-<%= machine_readable_metadata(schema: :article) %>
 
 <%= render "content_items/multi_part/header", {
     content_item: @content_item, heading_level: 1, margin_bottom: 3
 } %>
-
-  <!-- Div's added for classes for CSS instead of duping class -->
+<!-- Div's added for classes for CSS instead of duping class -->
 <div class="manual-body">
     <% if @content_item.description.present? %>
       <%= render "govuk_publishing_components/components/lead_paragraph", {
@@ -24,7 +28,7 @@
           {
             link: {
               text: part["title"],
-              path: @content_item.base_path + "/#{part['slug']}/part",
+              path: @content_item.base_path + "/#{part['slug']}",
               description: part["description"],
               full_size_description: true,
             }
